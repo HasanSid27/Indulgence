@@ -23,6 +23,8 @@ export interface Product {
   notes: string[];
   /** A sentence of description (tea cakes, bundt cakes). */
   description?: string;
+  /** Small line under the description (e.g. "(contains eggs)"). */
+  note?: string;
   variants: Variant[];
   image?: ProductImage;
 }
@@ -65,6 +67,8 @@ export interface SiteContent {
   menuIntro: string;
   menuPreviewHeading: string;
   menuPreviewText: string;
+  /** Default small line shown under every product's description. */
+  productNote: string;
   footerNote: string;
 }
 

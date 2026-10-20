@@ -19,7 +19,13 @@ export default async function Footer() {
             <p className="mb-4 font-semibold">Navigate</p>
             <ul className="space-y-2.5 opacity-80">
               {navLinks.map((l) => (
-                <li key={l.href}><TransitionLink href={l.href} className="link-line">{l.label}</TransitionLink></li>
+                <li key={l.href}>
+                  {l.label === "Contact" ? (
+                    <a href={`tel:+${settings.whatsappNumber}`} className="link-line">{l.label}</a>
+                  ) : (
+                    <TransitionLink href={l.href} className="link-line">{l.label}</TransitionLink>
+                  )}
+                </li>
               ))}
             </ul>
           </nav>

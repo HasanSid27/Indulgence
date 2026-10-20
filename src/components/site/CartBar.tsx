@@ -10,6 +10,7 @@ export default function CartBar() {
   const { lines, count, total, orderUrl, orderMessage, open, setOpen, setQty, clear } = useCart();
   const sheet = useRef<HTMLDivElement>(null);
   const [copied, setCopied] = useState(false);
+  const [sent, setSent] = useState(false);
 
   /** Fallback for when WhatsApp keeps an old unsent draft in the chat and ignores the prefilled text. */
   const copyOrder = async () => {
@@ -46,6 +47,12 @@ export default function CartBar() {
     };
   }, [open, setOpen]);
 
+  // A new sheet, or any change to the order, starts from the normal state again.
+  useEffect(() => {
+    setSent(false);
+    setCopied(false);
+  }, [open, orderMessage]);
+
   useEffect(() => {
     if (count === 0 && open) setOpen(false);
   }, [count, open, setOpen]);
@@ -61,7 +68,7 @@ export default function CartBar() {
             style={{ background: "#8d1a1c", color: "#fff", borderColor: "#8d1a1c" }}
             aria-haspopup="dialog"
           >
-            <span>{count} {count === 1 ? "item" : "items"} · {formatPrice(total)}</span>
+            <span key={count} className="added-pop">{count} {count === 1 ? "item" : "items"} · {formatPrice(total)}</span>
             <span aria-hidden className="opacity-60">|</span>
             <span>View order</span>
           </button>
@@ -119,26 +126,42 @@ export default function CartBar() {
           </div>
           <p className="mt-1 text-xs opacity-60">Delivery or pickup is arranged on WhatsApp. Nothing is charged here.</p>
 
-          <a
-            href={orderUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="mt-5 flex h-12 items-center justify-center rounded-full bg-[#8d1a1c] text-[0.95rem] font-medium text-white"
-          >
-            Order on WhatsApp
-          </a>
-          <button
-            type="button"
-            onClick={copyOrder}
-            className="mt-3 flex h-11 items-center justify-center rounded-full border border-[#8d1a1c] text-[0.9rem] font-medium text-[#8d1a1c]"
-          >
-            {copied ? "Copied ✓ — paste it into the chat" : "Copy order text"}
-          </button>
-          <p role="status" className="sr-only">{copied ? "Order text copied to the clipboard" : ""}</p>
-          <p className="mt-3 text-center text-xs opacity-60">
-            WhatsApp keeps an unsent message in a chat as a draft. If your new order doesn’t appear, send or clear the old draft there, or paste the copied text.
+          {sent ? (
+            <div className="mt-5 rounded-[1.25rem] bg-[#8d1a1c]/[0.07] p-4 text-center" role="status">
+              <p className="display text-xl text-[#8d1a1c]">Opened in WhatsApp ✓</p>
+              <p className="mt-1 text-sm opacity-75">Tap send in the chat to place your order. We’ll confirm it there.</p>
+              <div className="mt-4 flex flex-col gap-2 sm:flex-row sm:justify-center">
+                <button type="button" onClick={() => setSent(false)} className="h-11 rounded-full border border-[#8d1a1c] px-6 text-[0.9rem] font-medium text-[#8d1a1c]">
+                  Edit and resend
+                </button>
+                <button type="button" onClick={() => { clear(); setOpen(false); }} className="h-11 rounded-full bg-[#8d1a1c] px-6 text-[0.9rem] font-medium text-white">
+                  Start a new order
+                </button>
+              </div>
+            </div>
+          ) : (
+            <a
+              href={orderUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => setSent(true)}
+              className="mt-5 flex h-12 items-center justify-center rounded-full bg-[#8d1a1c] text-[0.95rem] font-medium text-white"
+            >
+              Order on WhatsApp
+            </a>
+          )}
+          <p className="mt-3 text-center text-sm opacity-70">
+            {sent ? "Didn’t open? " : "Prefer to paste it yourself? "}
+            <button type="button" onClick={copyOrder} className="font-medium text-[#8d1a1c] underline underline-offset-4">
+              {copied ? "Copied ✓" : "Copy order"}
+            </button>
+            {sent && <span className="opacity-80"> and message us on WhatsApp.</span>}
           </p>
-          <button type="button" onClick={clear} className="mt-3 text-center text-sm opacity-65 underline underline-offset-4">
+          <p role="status" className="sr-only">{copied ? "Order text copied to the clipboard" : ""}</p>
+          <p className="mt-2 text-center text-xs opacity-55">
+            If WhatsApp shows an old unsent draft instead of this order, send or clear it there, or paste the copied text.
+          </p>
+          <button type="button" onClick={clear} className="mt-2 text-center text-sm opacity-65 underline underline-offset-4">
             Clear order
           </button>
         </div>

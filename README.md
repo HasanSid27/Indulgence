@@ -27,9 +27,9 @@ From then on: **edit the sheet, wait ~5 minutes, the live site updates** (no red
 | Tab | What it controls |
 | --- | --- |
 | **Settings** | `whatsapp_number` (country code + number), `phone_display`, `instagram_handle`, `city`, `region`, `descriptor`, optional `address` / `email`, `menu_pdf_url` |
-| **Content** | headlines and paragraphs (hero tagline, intro, the 2–4 full-screen statements, purpose section, menu intro, last-screen headline, footer note, …) |
+| **Content** | headlines and paragraphs (hero tagline, intro, the 2–4 full-screen statements, purpose section, menu intro, last-screen headline, footer note, the standard small note under every product — `product_note`, default “(contains eggs)”, `none` hides it — …) |
 | **Categories** | `id`, `name`, `featured_on_home` — featured categories' products become the full-screen chapters on the home page |
-| **Products** | `category`, `name`, `ingredients` (separate with `\|`), `description`, `image` (file name), `image_alt`, up to 3 `size_n` / `price_n` pairs, `available` (yes/no hides a product) |
+| **Products** | `category`, `name`, `ingredients` (separate with `\|`), `description`, `image` (file name), `image_alt`, up to 3 `size_n` / `price_n` pairs, `available` (yes/no hides a product), optional `note` (small line under the description; blank = the standard note, `none` = hide) |
 | **OrderNotes** | policy notes under the menu (heading on the first row of a group, blank heading on the rows that follow) |
 
 Rules: prices are whole rupees (`599`, `₹1,299` both fine); a product with several prices needs a label for each size; up to 60 products, 8 categories. Long text is shortened; everything is treated as plain text.

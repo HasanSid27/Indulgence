@@ -50,6 +50,8 @@ function MenuItem({ product }: { product: Product }) {
           </ul>
         )}
 
+        {product.note && <p className="mt-2 text-[0.78rem] leading-snug opacity-70">{product.note}</p>}
+
         <ul className="mt-6 divide-y hairline border-t hairline">
           {product.variants.map((v) => (
             <li key={v.label ?? "base"} className="flex flex-wrap items-center justify-between gap-3 py-3.5">

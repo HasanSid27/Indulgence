@@ -2,7 +2,7 @@ import Image from "next/image";
 import Button from "./Button";
 import SplitText from "./SplitText";
 import { TransitionLink } from "./PageTransition";
-import { formatPrice, lowestPrice, productsIn, startingPrice } from "@/lib/format";
+import { formatPrice, lowestPrice, lowestVariantHint, productsIn, startingPrice } from "@/lib/format";
 import { getSiteData } from "@/lib/data";
 
 /** One tile per category — a swipeable rail on phones, a row on desktop. */
@@ -52,7 +52,10 @@ export default async function MenuPreview() {
                 {items.map((p) => (
                   <li key={p.slug} className="flex justify-between gap-4 py-2.5">
                     <span>{p.name}</span>
-                    <span className="muted shrink-0">{formatPrice(lowestPrice(p))}</span>
+                    <span className="muted shrink-0">
+                      {formatPrice(lowestPrice(p))}
+                      {lowestVariantHint(p) && <span className="ml-1.5 text-[0.8rem] opacity-80">({lowestVariantHint(p)})</span>}
+                    </span>
                   </li>
                 ))}
               </ul>

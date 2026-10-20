@@ -8,6 +8,9 @@ export const getLenis = () => instance;
 
 /** Smooth-scroll to a hash/selector, falling back to native scrolling. */
 export function scrollToTarget(target: string | number, offset = 0) {
+  // A menu overlay may have stopped Lenis a moment ago (it restarts after the click is handled); a stopped
+  // Lenis silently ignores scrollTo, which made same-page links in the mobile menu do nothing.
+  instance?.start();
   if (typeof target === "string") {
     const el = document.querySelector(target);
     if (!el) return;

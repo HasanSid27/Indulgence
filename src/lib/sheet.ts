@@ -148,7 +148,7 @@ const BASE_SETTINGS: SiteSettings = {
 };
 const BASE_CONTENT: SiteContent = {
   heroTagline: "", heroLabelLeft: "", heroLabelRight: "", introLine1: "", introLine2: "", introParagraph: "", statements: [], purposeLead: "", purposeParagraph: "",
-  finalHeadline: "", finalNote: "", menuIntro: "", menuPreviewHeading: "", menuPreviewText: "", footerNote: "",
+  finalHeadline: "", finalNote: "", menuIntro: "", menuPreviewHeading: "", menuPreviewText: "", productNote: "", footerNote: "",
 };
 
 /**
@@ -194,7 +194,8 @@ export function buildSiteData(tabs: SheetTabs, manifest: ImageManifest, fallback
     const put = (key: string, field: Exclude<keyof SiteContent, "statements">, max: number) => { const v = clean(ct.get(key) ?? "", max); if (v) content[field] = v as never; };
     put("hero_tagline", "heroTagline", 120); put("hero_label_left", "heroLabelLeft", 60); put("hero_label_right", "heroLabelRight", 60); put("intro_line_1", "introLine1", 60); put("intro_line_2", "introLine2", 60);
     put("intro_paragraph", "introParagraph", 400); put("purpose_lead", "purposeLead", 220); put("purpose_paragraph", "purposeParagraph", 500);
-    put("menu_intro", "menuIntro", 200); put("menu_preview_heading", "menuPreviewHeading", 80); put("menu_preview_text", "menuPreviewText", 200); put("final_headline", "finalHeadline", 80); put("final_note", "finalNote", 200); put("footer_note", "footerNote", 120);
+    put("menu_intro", "menuIntro", 200); put("menu_preview_heading", "menuPreviewHeading", 80); put("menu_preview_text", "menuPreviewText", 200);
+    { const pn = clean(ct.get("product_note") ?? "", 80); if (/^(none|no|off|hide|-)$/i.test(pn)) content.productNote = ""; else if (pn) content.productNote = pn; } put("final_headline", "finalHeadline", 80); put("final_note", "finalNote", 200); put("footer_note", "footerNote", 120);
     const stm = [1, 2, 3, 4].map((n) => clean(ct.get(`statement_${n}`) ?? "", 60)).filter(Boolean);
     if (stm.length) content.statements = stm;
   }
@@ -242,6 +243,9 @@ export function buildSiteData(tabs: SheetTabs, manifest: ImageManifest, fallback
       const ingRaw = clean(r.ingredients, 300); const parts = ingRaw ? (ingRaw.includes("|") ? ingRaw.split("|") : ingRaw.split(",")) : [];
       const notes = parts.map((p) => clean(p, 40)).filter(Boolean).slice(0, LIMITS.ingredients);
       const description = clean(r.description, 300) || undefined;
+      // small note under the description: the product's own, else the site-wide default; "none" hides it
+      const ownNote = clean(r.note, 80);
+      const note = /^(none|no|off|hide|-)$/i.test(ownNote) ? "" : ownNote || content.productNote;
       // image
       let image: ProductImage | undefined;
       const file = (r.image ?? "").trim();
@@ -252,7 +256,7 @@ export function buildSiteData(tabs: SheetTabs, manifest: ImageManifest, fallback
       }
       let slug = slugify(name) || `product-${row}`; if (usedSlugs.has(slug)) { let k = 2; while (usedSlugs.has(`${slug}-${k}`)) k++; slug = `${slug}-${k}`; }
       usedSlugs.add(slug);
-      products.push({ slug, name, category: cat.id, notes, ...(description ? { description } : {}), variants, ...(image ? { image } : {}) });
+      products.push({ slug, name, category: cat.id, notes, ...(description ? { description } : {}), ...(note ? { note } : {}), variants, ...(image ? { image } : {}) });
     });
   }
   const finalProducts = products;

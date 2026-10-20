@@ -41,8 +41,15 @@ export default async function PurposeSection() {
         <SplitText as="p" className="display text-[clamp(2.4rem,6vw,5.4rem)]">
           {content.purposeLead}
         </SplitText>
-        <p data-fade className="mx-auto mt-8 max-w-[32rem] text-[clamp(1.05rem,1.5vw,1.25rem)] leading-relaxed opacity-85">
-          {content.purposeParagraph}
+        <p data-fade className="mx-auto mt-8 max-w-[32rem] text-[clamp(1.05rem,1.5vw,1.25rem)] leading-relaxed" style={{ color: "color-mix(in srgb, var(--fg) 85%, transparent)" }}>
+          {/* The cats' names stand out in a warm gold colour (works for any wording from the sheet). */}
+          {content.purposeParagraph.split(/(Mylo|Alexa)/i).map((part, i) =>
+            i % 2 === 1 ? (
+              <span key={i} style={{ color: "#f6cf7a" }}>{part}</span>
+            ) : (
+              part
+            ),
+          )}
         </p>
         <div data-fade data-delay="0.1" className="mt-10">
           <Button href="/menu" variant="outline">Explore the menu</Button>

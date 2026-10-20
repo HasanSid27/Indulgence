@@ -4,6 +4,11 @@
   "height": 1024,
   "alpha": false
  },
+ "biscoff-reverie-v2.webp": {
+  "width": 1536,
+  "height": 1024,
+  "alpha": false
+ },
  "biscoff-reverie.webp": {
   "width": 654,
   "height": 524,
@@ -13,6 +18,11 @@
   "width": 706,
   "height": 624,
   "alpha": true
+ },
+ "chocolate-tea-cake-v2.webp": {
+  "width": 1254,
+  "height": 1254,
+  "alpha": false
  },
  "chocolate-tea-cake.webp": {
   "width": 1184,
@@ -29,6 +39,11 @@
   "height": 624,
   "alpha": true
  },
+ "marble-tea-cake-v2.webp": {
+  "width": 1254,
+  "height": 1254,
+  "alpha": false
+ },
  "marble-tea-cake.webp": {
   "width": 1180,
   "height": 728,
@@ -37,6 +52,11 @@
  "nutty-elite-photo.webp": {
   "width": 1254,
   "height": 1254,
+  "alpha": false
+ },
+ "nutty-elite-v2.webp": {
+  "width": 1536,
+  "height": 1024,
   "alpha": false
  },
  "nutty-elite.webp": {
@@ -49,6 +69,11 @@
   "height": 1254,
   "alpha": false
  },
+ "original-indulgence-v2.webp": {
+  "width": 1536,
+  "height": 1024,
+  "alpha": false
+ },
  "original-indulgence.webp": {
   "width": 792,
   "height": 640,
@@ -57,6 +82,11 @@
  "rocher-reserve-photo.webp": {
   "width": 1254,
   "height": 1254,
+  "alpha": false
+ },
+ "rocher-reserve-v2.webp": {
+  "width": 1536,
+  "height": 1024,
   "alpha": false
  },
  "rocher-reserve.webp": {
@@ -68,6 +98,11 @@
   "width": 710,
   "height": 624,
   "alpha": true
+ },
+ "vanilla-tea-cake-v2.webp": {
+  "width": 1254,
+  "height": 1254,
+  "alpha": false
  },
  "vanilla-tea-cake.webp": {
   "width": 1180,
